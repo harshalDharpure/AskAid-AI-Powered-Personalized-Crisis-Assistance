@@ -15,7 +15,6 @@ The inspiration for **MedAtlas AI** came from the challenges medical practitione
 - **Snowflake Cortex Search** was used to index and retrieve medical literature, clinical trial data, and rare disease case studies. We utilized its hybrid search engine to ensure both semantic and lexical similarity for accurate retrieval.
 - **Mistral LLM** was implemented to generate actionable recommendations and insights based on the retrieved documents.
 - **Streamlit** served as the front-end framework, allowing us to build an intuitive dashboard where doctors could easily query the system and interact with patient data.
-- **TruLens** was used to measure and optimize the retrieval and generation accuracy, helping us fine-tune the system to ensure precise responses.
 - The backend was powered by **Snowflake serverless functions**, handling the processing of queries and generation of responses.
 
 ## **Challenges we ran into** ⚠️
@@ -26,13 +25,12 @@ The inspiration for **MedAtlas AI** came from the challenges medical practitione
 ## **Accomplishments that we're proud of** 🏆
 - We successfully built a functional prototype of **MedAtlas AI** that could accurately retrieve relevant medical literature and provide context-aware, actionable insights for rare disease diagnosis.
 - The **Streamlit dashboard** allows for seamless interaction and provides a user-friendly interface for medical professionals.
-- The **TruLens optimization** greatly improved the retrieval and response relevance, ensuring that the system provides precise and actionable information.
+- The **RAG framework** greatly improved the relevance of the responses, ensuring that the system provides precise and actionable information.
 
 ## **What we learned** 📚
 - We learned how to leverage the full capabilities of **Snowflake Cortex Search**, combining semantic and lexical search to retrieve highly relevant documents.
 - We gained deep insight into **Mistral LLM** and how to use it effectively to generate accurate, context-aware responses for specialized domains like healthcare.
 - We learned how to integrate multiple tools into a cohesive end-to-end application, handling both backend data processing and frontend user interaction seamlessly.
-- Working with **TruLens** taught us the importance of optimizing retrieval strategies and measuring their effectiveness to improve system performance.
 
 ## **What's next for MedAtlas AI: Precision Healthcare for Rare Diseases** 🚀
 - **Scaling the application** to support additional rare diseases and expanding the dataset to include more diverse medical literature and case studies.
