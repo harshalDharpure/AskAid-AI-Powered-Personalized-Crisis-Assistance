@@ -1,81 +1,41 @@
-# AskAid-AI-Powered-Personalized-Crisis-Assistance
-AskAid: A RAG app delivering real-time crisis aid via Cortex Search, Mistral LLM, and Streamlit. Offers tailored answers, resources, and recommendations, optimized with TruLens for top performance.
+## MedAtlas AI: A Precision Healthcare Assistant for Rare Disease Diagnosis and Management
 
+## **Inspiration** 🌟
+The inspiration for **MedAtlas AI** came from the challenges medical practitioners face when diagnosing and treating rare diseases. These conditions are often overlooked or misdiagnosed due to the lack of centralized, accessible knowledge. Doctors must sift through large amounts of literature, case studies, and clinical trial data, which is time-consuming and prone to human error. By leveraging AI 🤖, we aimed to provide a real-time, evidence-based assistant that could assist healthcare professionals in making accurate diagnoses and treatment decisions for rare diseases.
 
-# AskAid: AI-Powered Personalized Crisis Assistance  
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![Platform](https://img.shields.io/badge/platform-Streamlit-blue)](https://streamlit.io/) [![Made with](https://img.shields.io/badge/Made%20with-Mistral%20LLM-green)](https://mistral.ai/)  
+## **What it does** 🩺
+**MedAtlas AI** is a **Retrieval Augmented Generation (RAG)**-powered healthcare assistant designed to assist medical practitioners in diagnosing and managing rare diseases. The platform:
+- Retrieves relevant medical literature and clinical case studies using **Snowflake Cortex Search** 🔍.
+- Generates context-aware, actionable recommendations for diagnosis and treatment with **Mistral LLM** 💡.
+- Offers a **Streamlit-based interface** for easy interaction, allowing users to input patient symptoms and get real-time insights 🖥️.
+- Prevents hallucinations by grounding answers with relevant documents, ensuring accuracy and reliability ✅.
+- Tracks patient history and offers personalized treatment recommendations based on medical research 📑.
 
-AskAid is a **state-of-the-art AI-powered Retrieval-Augmented Generation (RAG)** platform designed to provide **personalized, real-time crisis assistance**. Whether you're facing natural disasters, mental health challenges, or financial hardships, AskAid connects you to accurate, actionable resources tailored to your needs and location.
+## **How we built it** 🛠️
+- **Snowflake Cortex Search** was used to index and retrieve medical literature, clinical trial data, and rare disease case studies. We utilized its hybrid search engine to ensure both semantic and lexical similarity for accurate retrieval.
+- **Mistral LLM** was implemented to generate actionable recommendations and insights based on the retrieved documents.
+- **Streamlit** served as the front-end framework, allowing us to build an intuitive dashboard where doctors could easily query the system and interact with patient data.
+- **TruLens** was used to measure and optimize the retrieval and generation accuracy, helping us fine-tune the system to ensure precise responses.
+- The backend was powered by **Snowflake serverless functions**, handling the processing of queries and generation of responses.
 
----
+## **Challenges we ran into** ⚠️
+- One of the biggest challenges was ensuring that the system could handle complex medical queries while grounding responses in relevant documents. Mistral’s LLM needed to be carefully fine-tuned to provide accurate and context-aware answers.
+- Integrating Snowflake Cortex Search’s hybrid retrieval system with the LLM to ensure seamless interaction was another challenge. We had to carefully balance the retrieval of semantically relevant documents and the generation of accurate responses based on them.
+- Streamlit’s integration with Snowflake and Mistral LLM required additional customization to ensure smooth user experience and real-time results.
 
-## 🚀 Features  
+## **Accomplishments that we're proud of** 🏆
+- We successfully built a functional prototype of **MedAtlas AI** that could accurately retrieve relevant medical literature and provide context-aware, actionable insights for rare disease diagnosis.
+- The **Streamlit dashboard** allows for seamless interaction and provides a user-friendly interface for medical professionals.
+- The **TruLens optimization** greatly improved the retrieval and response relevance, ensuring that the system provides precise and actionable information.
 
-- **Personalized Crisis Assistance**  
-  Combines **geo-location filtering** and **AI-powered search** to deliver actionable, context-specific information.  
+## **What we learned** 📚
+- We learned how to leverage the full capabilities of **Snowflake Cortex Search**, combining semantic and lexical search to retrieve highly relevant documents.
+- We gained deep insight into **Mistral LLM** and how to use it effectively to generate accurate, context-aware responses for specialized domains like healthcare.
+- We learned how to integrate multiple tools into a cohesive end-to-end application, handling both backend data processing and frontend user interaction seamlessly.
+- Working with **TruLens** taught us the importance of optimizing retrieval strategies and measuring their effectiveness to improve system performance.
 
-- **Empathetic, Human-Like Responses**  
-  Uses **Mistral LLM** to provide compassionate, helpful answers tailored to users’ needs.  
-
-- **Real-Time Geo-Location Filtering**  
-  Finds nearby resources like shelters, food banks, and hotlines for users in urgent situations.  
-
-- **Continuous Optimization with TruLens**  
-  Integrates **TruLens** to continuously improve search accuracy, speed, and response quality.  
-
----
-
-## 🛠️ How We Built It  
-
-### Technologies Used:  
-- **[Cortex Search](https://www.cortex.io/)**: Powers the intelligent search engine, retrieving relevant crisis-related data from a **Snowflake** database.  
-- **[Mistral LLM](https://mistral.ai/)**: Generates empathetic, human-like responses for user queries.  
-- **Geo-Location Filtering**: Refines search results to display resources nearest to the user.  
-- **[TruLens](https://trulens.org/)**: Optimizes and measures the relevance of results to improve user experience.  
-- **[Streamlit](https://streamlit.io/)**: Builds the intuitive, chat-like user interface and an admin dashboard to manage crisis resources dynamically.
-
----
-
-## 📈 Challenges  
-
-1. **Data Integration & Quality**: Sourcing and preprocessing high-quality, up-to-date crisis-related datasets.  
-2. **Geo-Location Accuracy**: Ensuring precise location-based filtering, especially for dynamic events like natural disasters.  
-3. **Search Performance**: Balancing query reformulation, retrieval techniques, and response generation for fast, accurate results.  
-4. **Empathetic Responses**: Fine-tuning Mistral LLM to ensure compassion in sensitive crisis scenarios.  
-
----
-
-## 🎉 Accomplishments  
-
-- **Tailored, Actionable Results**: Delivers highly relevant, location-aware crisis resources with actionable next steps.  
-- **Optimization with TruLens**: Improved search precision and response speed using continuous feedback loops.  
-- **Scalable Design**: Can be extended to healthcare, education, or public safety, depending on community needs.  
-
----
-
-## 📚 What We Learned  
-
-- The importance of **personalized assistance** during crises.  
-- Continuous improvement through tools like **TruLens** ensures adaptability to real-time challenges.  
-- Integrating multiple cutting-edge tools effectively in a single system is key to solving real-world problems.  
-
----
-
-## 🚀 What's Next  
-
-1. **Expand Resource Database**: Add more datasets, including live updates from government agencies and local nonprofits.  
-2. **Globalization**: Fine-tune **Mistral LLM** for multiple languages to assist users worldwide.  
-3. **Mobile App Development**: Develop a mobile version for easier access during emergencies.  
-4. **Real-Time Crisis Monitoring**: Integrate live updates for weather reports, emergency alerts, and health crises.  
-
----
-
-## 💻 Getting Started  
-
-### Prerequisites:  
-- Python 3.9+  
-- [Streamlit](https://docs.streamlit.io/)  
-- [Mistral LLM](https://mistral.ai/)  
-- [Cortex Search](https://www.cortex.io/)  
-- [Snowflake](https://www.snowflake.com/)  
-
+## **What's next for MedAtlas AI: Precision Healthcare for Rare Diseases** 🚀
+- **Scaling the application** to support additional rare diseases and expanding the dataset to include more diverse medical literature and case studies.
+- **Real-time document updates**: Automating the ingestion of new research papers, clinical trials, and medical reports to keep the system up-to-date 📚.
+- Expanding the **user base** by offering multilingual support for global healthcare providers 🌍.
+- Implementing **collaborative features**, allowing healthcare professionals to share insights and case studies, fostering a community-driven approach to rare disease management 🤝.
