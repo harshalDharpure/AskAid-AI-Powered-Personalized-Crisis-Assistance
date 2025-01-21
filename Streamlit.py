@@ -17,7 +17,7 @@ CORTEX_SEARCH_SERVICE = "MEDATLAS_AI_SEARCH_SERVICE_CS"
 connection_parameters = {
     "user": "hdharpure",             # Snowflake username
     "password": "Harshal@9922",     # Snowflake password
-    "account": "QU81872",       # Snowflake account
+    "account": "qu81872.ap-south-1.aws",       # Snowflake account
     "warehouse": "COMPUTE_WH",   # Snowflake warehouse
     "database": "MEDATLAS_AI_CORTEX_SEARCH_DOCS",     # Snowflake database
     "schema": "DATA"          # Snowflake schema
