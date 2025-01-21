@@ -4,10 +4,14 @@ from snowflake.cortex import Complete
 from snowflake.core import Root
 import pandas as pd
 import json
+
+
+pd.set_option("max_colwidth", None)
+
+
 import streamlit as st
 from snowflake.snowpark import Session
 import json
-
 
 # Snowflake connection parameters (fill with your actual credentials)
 connection_parameters = {
@@ -16,13 +20,18 @@ connection_parameters = {
     "account": "qu81872.ap-south-1.aws",       # Snowflake account
     "warehouse": "COMPUTE_WH",   # Snowflake warehouse
     "database": "MEDATLAS_AI_CORTEX_SEARCH_DOCS",     # Snowflake database
-    "schema": "DATA"          # Snowflake schema
+    "schema": "DATA"          # Snowflake schema      # Snowflake schema
 }
 
 # Function to create a Snowpark session
 def create_snowpark_session():
     try:
-        session = Session.builder.configs(connection_parameters).create()
+        # Ensure only one session is created
+        if 'session' not in st.session_state:
+            session = Session.builder.configs(connection_parameters).create()
+            st.session_state.session = session  # Store session in Streamlit's session state
+        else:
+            session = st.session_state.session
         return session
     except Exception as e:
         st.error(f"Error creating Snowpark session: {e}")
@@ -48,17 +57,16 @@ else:
         st.error(f"Error in accessing or querying Snowflake: {e}")
 
 
-pd.set_option("max_colwidth", None)
-
-
-
 ### Default Values
 NUM_CHUNKS = 3  # Num-chunks provided as context. Play with this to check how it affects your accuracy
 slide_window = 7  # how many last conversations to remember. This is the slide window.
+
+# service parameters
 CORTEX_SEARCH_DATABASE = "MEDATLAS_AI_CORTEX_SEARCH_DOCS"
 CORTEX_SEARCH_SCHEMA = "DATA"
 CORTEX_SEARCH_SERVICE = "MEDATLAS_AI_SEARCH_SERVICE_CS"
 ######
+
 
 
 # columns to query in the service
