@@ -11,8 +11,8 @@ pd.set_option("max_colwidth", None)
 # Snowflake connection parameters (update with your actual credentials)
 connection_parameters = {
     "user": "hdharpure",
-    "password": "Harshal@9922",
-    "account": "qu81872.ap-south-1.aws",
+    "password": "",
+    "account": "",
     "warehouse": "COMPUTE_WH",
     "database": "MEDATLAS_AI_CORTEX_SEARCH_DOCS",
     "schema": "DATA"
