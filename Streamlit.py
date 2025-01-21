@@ -8,10 +8,6 @@ import streamlit as st
 from snowflake.snowpark import Session
 import json
 
-CORTEX_SEARCH_DATABASE = "MEDATLAS_AI_CORTEX_SEARCH_DOCS"
-CORTEX_SEARCH_SCHEMA = "DATA"
-CORTEX_SEARCH_SERVICE = "MEDATLAS_AI_SEARCH_SERVICE_CS"
-######
 
 # Snowflake connection parameters (fill with your actual credentials)
 connection_parameters = {
@@ -54,38 +50,11 @@ else:
 
 pd.set_option("max_colwidth", None)
 
-def create_snowpark_session():
-    try:
-        # Check if session is already created in Streamlit session state
-        if 'session' not in st.session_state:
-            session = Session.builder.configs(connection_parameters).create()
-            st.session_state.session = session  # Store session in Streamlit's session state
-        else:
-            session = st.session_state.session  # Use the existing session
-        return session
-    except Exception as e:
-        st.error(f"Error creating Snowpark session: {e}")
-        return None
-
-# Example of registering a UDF
-def some_udf(session, data):
-    # UDF logic here
-    return data
-
-# Register UDF with the correct session
-session.udf.register(some_udf, name="udf_name", replace=True)
 
 
 ### Default Values
 NUM_CHUNKS = 3  # Num-chunks provided as context. Play with this to check how it affects your accuracy
 slide_window = 7  # how many last conversations to remember. This is the slide window.
-
-# service parameters
-CORTEX_SEARCH_DATABASE = "MEDATLAS_AI_CORTEX_SEARCH_DOCS"
-CORTEX_SEARCH_SCHEMA = "DATA"
-CORTEX_SEARCH_SERVICE = "MEDATLAS_AI_SEARCH_SERVICE_CS"
-######
-
 
 
 # columns to query in the service
