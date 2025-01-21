@@ -4,6 +4,52 @@ from snowflake.cortex import Complete
 from snowflake.core import Root
 import pandas as pd
 import json
+import streamlit as st
+from snowflake.snowpark import Session
+import json
+
+CORTEX_SEARCH_DATABASE = "MEDATLAS_AI_CORTEX_SEARCH_DOCS"
+CORTEX_SEARCH_SCHEMA = "DATA"
+CORTEX_SEARCH_SERVICE = "MEDATLAS_AI_SEARCH_SERVICE_CS"
+######
+
+# Snowflake connection parameters (fill with your actual credentials)
+connection_parameters = {
+    "user": "hdharpure",             # Snowflake username
+    "password": "Harshal@9922",     # Snowflake password
+    "account": "QU81872",       # Snowflake account
+    "warehouse": "COMPUTE_WH",   # Snowflake warehouse
+    "database": "MEDATLAS_AI_CORTEX_SEARCH_DOCS",     # Snowflake database
+    "schema": "DATA"          # Snowflake schema
+}
+
+# Function to create a Snowpark session
+def create_snowpark_session():
+    try:
+        session = Session.builder.configs(connection_parameters).create()
+        return session
+    except Exception as e:
+        st.error(f"Error creating Snowpark session: {e}")
+        return None
+
+# Create the Snowpark session
+session = create_snowpark_session()
+
+if session is None:
+    st.error("Failed to establish a connection to Snowflake.")
+else:
+    # Example of accessing a database schema or performing operations
+    try:
+        # Assuming 'Root' and other variables like 'CORTEX_SEARCH_DATABASE', etc., are defined elsewhere
+        root = Root(session)  # Replace with your actual implementation
+        svc = root.databases["CORTEX_SEARCH_DATABASE"].schemas["CORTEX_SEARCH_SCHEMA"].cortex_search_services["CORTEX_SEARCH_SERVICE"]
+
+        # Example data query or service logic
+        result = svc.query("SELECT * FROM example_table LIMIT 10")  # Replace with actual query
+        st.write(result.to_pandas())  # Display result using Streamlit
+
+    except Exception as e:
+        st.error(f"Error in accessing or querying Snowflake: {e}")
 
 
 pd.set_option("max_colwidth", None)
