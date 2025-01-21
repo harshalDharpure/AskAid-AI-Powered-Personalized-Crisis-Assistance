@@ -150,8 +150,8 @@ def answer_question(myquestion):
 # Main app logic
 def main():
     st.title(":speech_balloon: Chat Document Assistant with Snowflake Cortex 🤖")
-    st.write("Available documents:")
-    
+    st.write("Available documents:") 
+
     # List available documents
     try:
         docs_available = session.sql("ls @docs").collect()
