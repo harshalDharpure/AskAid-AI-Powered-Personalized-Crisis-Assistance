@@ -7,28 +7,11 @@ from snowflake.core import Root
 import pandas as pd
 import json
 
-# Snowflake details (ensure these are correct or securely retrieved)
-os.environ['SNOWFLAKE_USER'] = 'hdharpure'
-os.environ['SNOWFLAKE_USER_PASSWORD'] = 'Harshal@9922'
-os.environ['SNOWFLAKE_ACCOUNT'] = 'iorvcvq'
-os.environ['SNOWFLAKE_DATABASE'] = 'MEDATLAS_AI_CORTEX_SEARCH_DOCS'
-os.environ['SNOWFLAKE_SCHEMA'] = 'DATA'
-os.environ['SNOWFLAKE_CORTEX_SEARCH_SERVICE'] = 'MEDATLAS_AI_SEARCH_SERVICE_CS'
-
-# Snowflake connection parameters
-connection_params = {
-    "account": os.getenv("SNOWFLAKE_ACCOUNT"),
-    "user": os.getenv("SNOWFLAKE_USER"),
-    "password": os.getenv("SNOWFLAKE_USER_PASSWORD"),
-    "database": os.getenv("SNOWFLAKE_DATABASE"),
-    "schema": os.getenv("SNOWFLAKE_SCHEMA")
-    
-}
-
-# Create Snowflake session
-snowpark_session = Session.builder.configs(connection_params).create()
-
 # Service parameters
+SNOWFLAKE_USER = 'hdharpure'
+SNOWFLAKE_USER_PASSWORD= 'Harshal@9922'
+SNOWFLAKE_ACCOUNT = 'iorvcvq'
+SNOWFLAKE_DATABASE = 'MEDATLAS_AI_CORTEX_SEARCH_DOCS'
 CORTEX_SEARCH_DATABASE = "MEDATLAS_AI_CORTEX_SEARCH_DOCS"
 CORTEX_SEARCH_SCHEMA = "DATA"
 CORTEX_SEARCH_SERVICE = "MEDATLAS_AI_SEARCH_SERVICE_CS"
