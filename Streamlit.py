@@ -3,24 +3,24 @@ from snowflake.snowpark import Session
 from snowflake.cortex import Complete
 from snowflake.core import Root
 import pandas as pd
-import json
+import traceback
 
 # Set max column width for pandas
 pd.set_option("max_colwidth", None)
 
 # Snowflake connection parameters (update with your actual credentials)
 connection_parameters = {
-    "user": "hdharpure",              # Snowflake username
-    "password": "Harshal@9922",       # Snowflake password
-    "account": "qu81872.ap-south-1.aws",  # Snowflake account
-    "warehouse": "COMPUTE_WH",        # Snowflake warehouse
-    "database": "MEDATLAS_AI_CORTEX_SEARCH_DOCS",  # Snowflake database
-    "schema": "DATA"                  # Snowflake schema
+    "user": "hdharpure",
+    "password": "Harshal@9922",
+    "account": "qu81872.ap-south-1.aws",
+    "warehouse": "COMPUTE_WH",
+    "database": "MEDATLAS_AI_CORTEX_SEARCH_DOCS",
+    "schema": "DATA"
 }
 
 # Default values for service parameters
-NUM_CHUNKS = 3  # Number of chunks to retrieve
-slide_window = 7  # How many last conversations to remember
+NUM_CHUNKS = 3
+slide_window = 7
 CORTEX_SEARCH_DATABASE = "MEDATLAS_AI_CORTEX_SEARCH_DOCS"
 CORTEX_SEARCH_SCHEMA = "DATA"
 CORTEX_SEARCH_SERVICE = "MEDATLAS_AI_SEARCH_SERVICE_CS"
@@ -33,10 +33,11 @@ def create_snowpark_session():
         st.success("Successfully connected to Snowflake.")
         return session
     except Exception as e:
-        st.error(f"Error creating Snowpark session: {e}")
+        st.error("Error creating Snowpark session:")
+        st.error(traceback.format_exc())
         return None
 
-# Initialize the Snowflake session
+# Initialize Snowflake session
 session = create_snowpark_session()
 if session is None:
     st.stop()
@@ -46,7 +47,8 @@ try:
     root = Root(session)
     svc = root.databases[CORTEX_SEARCH_DATABASE].schemas[CORTEX_SEARCH_SCHEMA].cortex_search_services[CORTEX_SEARCH_SERVICE]
 except Exception as e:
-    st.error(f"Error initializing Cortex service: {e}")
+    st.error("Error initializing Cortex service:")
+    st.error(traceback.format_exc())
     st.stop()
 
 # Sidebar configuration options
@@ -59,9 +61,14 @@ def config_options():
     )
 
     # Fetch distinct categories
-    categories = session.table('docs_chunks_table').select('category').distinct().collect()
-    cat_list = ['ALL'] + [cat.CATEGORY for cat in categories]
-    st.sidebar.selectbox('Select product category:', cat_list, key="category_value")
+    try:
+        categories = session.table('docs_chunks_table').select('category').distinct().collect()
+        cat_list = ['ALL'] + [cat.CATEGORY for cat in categories]
+        st.sidebar.selectbox('Select product category:', cat_list, key="category_value")
+    except Exception as e:
+        st.error("Error fetching categories:")
+        st.error(traceback.format_exc())
+        st.stop()
 
     st.sidebar.checkbox('Remember chat history?', key="use_chat_history", value=True)
     st.sidebar.checkbox('Debug: Show query summary', key="debug", value=True)
@@ -83,23 +90,29 @@ def get_similar_chunks_search_service(query):
             response = svc.search(query, COLUMNS, filter=filter_obj, limit=NUM_CHUNKS)
         return response.json()
     except Exception as e:
-        st.error(f"Error querying Cortex service: {e}")
+        st.error("Error querying Cortex service:")
+        st.error(traceback.format_exc())
         return None
 
 # Summarize the chat history for query context
 def summarize_question_with_history(chat_history, question):
-    prompt = f"""
-        Based on the chat history below and the question, generate a query that extends the question 
-        with the chat history provided. Only return the query, no explanation.
+    try:
+        prompt = f"""
+            Based on the chat history below and the question, generate a query that extends the question 
+            with the chat history provided. Only return the query, no explanation.
 
-        <chat_history>
-        {chat_history}
-        </chat_history>
-        <question>
-        {question}
-        </question>
-    """
-    return Complete(st.session_state.model_name, prompt)
+            <chat_history>
+            {chat_history}
+            </chat_history>
+            <question>
+            {question}
+            </question>
+        """
+        return Complete(st.session_state.model_name, prompt)
+    except Exception as e:
+        st.error("Error summarizing question with chat history:")
+        st.error(traceback.format_exc())
+        return None
 
 # Main prompt creation logic
 def create_prompt(myquestion):
@@ -126,8 +139,13 @@ def create_prompt(myquestion):
 # Answer the user question
 def answer_question(myquestion):
     prompt, context = create_prompt(myquestion)
-    response = Complete(st.session_state.model_name, prompt)
-    return response, context
+    try:
+        response = Complete(st.session_state.model_name, prompt)
+        return response, context
+    except Exception as e:
+        st.error("Error answering question:")
+        st.error(traceback.format_exc())
+        return None, None
 
 # Main app logic
 def main():
@@ -135,8 +153,12 @@ def main():
     st.write("Available documents:")
     
     # List available documents
-    docs_available = session.sql("ls @docs").collect()
-    st.dataframe([doc["name"] for doc in docs_available])
+    try:
+        docs_available = session.sql("ls @docs").collect()
+        st.dataframe([doc["name"] for doc in docs_available])
+    except Exception as e:
+        st.error("Error listing documents:")
+        st.error(traceback.format_exc())
 
     config_options()
     init_messages()
@@ -155,7 +177,10 @@ def main():
         with st.chat_message("assistant"):
             with st.spinner(f"Fetching response..."):
                 response, context = answer_question(question)
-                st.markdown(response)
+                if response:
+                    st.markdown(response)
+                else:
+                    st.error("Unable to fetch a response.")
 
 if __name__ == "__main__":
     main()
