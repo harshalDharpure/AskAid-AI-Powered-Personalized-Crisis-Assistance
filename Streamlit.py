@@ -40,16 +40,22 @@ if session is None:
 else:
     # Example of accessing a database schema or performing operations
     try:
-        # Assuming 'Root' and other variables like 'CORTEX_SEARCH_DATABASE', etc., are defined elsewhere
-        root = Root(session)  # Replace with your actual implementation
-        svc = root.databases["CORTEX_SEARCH_DATABASE"].schemas["CORTEX_SEARCH_SCHEMA"].cortex_search_services["CORTEX_SEARCH_SERVICE"]
+    # Ensure the service reference is correct
+    root = Root(session)
+    svc = root.databases[CORTEX_SEARCH_DATABASE].schemas[CORTEX_SEARCH_SCHEMA].cortex_search_services[CORTEX_SEARCH_SERVICE]
 
-        # Example data query or service logic
-        result = svc.search("SELECT * FROM example_table LIMIT 10")  # Replace with actual query
-        st.write(result.to_pandas())  # Display result using Streamlit
+    # Replace `query` with `search` (adjust parameters as per API)
+    response = svc.search(
+        query="SELECT * FROM example_table LIMIT 10",
+        columns=COLUMNS,
+        limit=NUM_CHUNKS
+    )
 
-    except Exception as e:
-        st.error(f"Error in accessing or querying Snowflake: {e}")
+    # Convert response to DataFrame (if applicable)
+    st.write(response.to_pandas())  # Adjust if response format is not directly convertible
+
+ except Exception as e:
+    st.error(f"Error in accessing or querying Snowflake: {e}")
 
 
 ### Default Values
