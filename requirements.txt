@@ -1,5 +1,4 @@
-snowflake-ml-python
-snowflake.core
-snowflake-snowpark-python
-streamlit
-python
+snowflake-ml-python==1.6.2
+snowflake.core==1.0.2
+snowflake-snowpark-python==1.22.1
+streamlit==1.26.0
