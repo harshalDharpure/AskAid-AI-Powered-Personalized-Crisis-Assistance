@@ -20,9 +20,19 @@ connection_parameters = {
     "account": "qu81872.ap-south-1.aws",       # Snowflake account
     "warehouse": "COMPUTE_WH",   # Snowflake warehouse
     "database": "MEDATLAS_AI_CORTEX_SEARCH_DOCS",     # Snowflake database
-    "schema": "DATA"          # Snowflake schema      # Snowflake schema
+    "schema": "DATA"          # Snowflake schema
 }
 
+@st.cache_resource
+def get_snowflake_session():
+    return Session.builder.configs(connection_parameters).create()
+
+# Get the session
+session = get_snowflake_session()
+
+# Example application logic
+st.title("Snowflake and Streamlit Integration")
+st.write("Snowflake session initialized successfully.")
 # Function to create a Snowpark session
 def create_snowpark_session():
     try:
