@@ -55,6 +55,10 @@ pd.set_option("max_colwidth", None)
 ### Default Values
 NUM_CHUNKS = 3  # Num-chunks provided as context. Play with this to check how it affects your accuracy
 slide_window = 7  # how many last conversations to remember. This is the slide window.
+CORTEX_SEARCH_DATABASE = "MEDATLAS_AI_CORTEX_SEARCH_DOCS"
+CORTEX_SEARCH_SCHEMA = "DATA"
+CORTEX_SEARCH_SERVICE = "MEDATLAS_AI_SEARCH_SERVICE_CS"
+######
 
 
 # columns to query in the service
