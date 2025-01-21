@@ -45,7 +45,7 @@ else:
         svc = root.databases["CORTEX_SEARCH_DATABASE"].schemas["CORTEX_SEARCH_SCHEMA"].cortex_search_services["CORTEX_SEARCH_SERVICE"]
 
         # Example data query or service logic
-        result = svc.query("SELECT * FROM example_table LIMIT 10")  # Replace with actual query
+        result = svc.search("SELECT * FROM example_table LIMIT 10")  # Replace with actual query
         st.write(result.to_pandas())  # Display result using Streamlit
 
     except Exception as e:
