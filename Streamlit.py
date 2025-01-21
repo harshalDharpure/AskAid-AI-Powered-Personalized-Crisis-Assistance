@@ -14,26 +14,70 @@ from snowflake.snowpark import Session
 import json
 
 # Snowflake connection parameters (fill with your actual credentials)
-connection_parameters = {
-    "user": "hdharpure",             # Snowflake username
-    "password": "Harshal@9922",     # Snowflake password
+from snowflake.snowpark import Session
+from snowflake.snowpark.exceptions import SnowparkSessionException
+
+# Configuration for Snowflake connection
+config = {
+  "user": "hdharpure",             # Snowflake username
+   "password": "Harshal@9922",     # Snowflake password
     "account": "qu81872.ap-south-1.aws",       # Snowflake account
     "warehouse": "COMPUTE_WH",   # Snowflake warehouse
     "database": "MEDATLAS_AI_CORTEX_SEARCH_DOCS",     # Snowflake database
     "schema": "DATA"          # Snowflake schema
 }
 
-@st.cache_resource
-def get_snowflake_session():
-    return Session.builder.configs(connection_parameters).create()
+class CortexSearchServiceResource:
+    def __init__(self):
+        self.session = None
 
-# Get the session
-session = get_snowflake_session()
+    def initialize_session(self):
+        """Initialize the Snowflake session."""
+        if self.session is not None:
+            print("Closing the existing session...")
+            self.session.close()
 
-# Example application logic
-st.title("Snowflake and Streamlit Integration")
-st.write("Snowflake session initialized successfully.")
-# Function to create a Snowpark session
+        self.session = Session.builder.configs(config).create()
+        print("Snowflake session initialized.")
+
+    def query(self, sql_query):
+        """Execute a query using the Snowflake session."""
+        if self.session is None:
+            raise AttributeError("Snowflake session is not initialized. Call 'initialize_session' first.")
+        
+        try:
+            return self.session.sql(sql_query).collect()
+        except Exception as e:
+            print(f"Error executing query: {e}")
+            return None
+
+    def close_session(self):
+        """Close the Snowflake session."""
+        if self.session is not None:
+            self.session.close()
+            print("Snowflake session closed.")
+
+
+# Main function
+if __name__ == "__main__":
+    try:
+        # Initialize the service
+        search_service = CortexSearchServiceResource()
+        search_service.initialize_session()
+
+        # Perform a query (replace 'your_table' with your actual table)
+        query_result = search_service.query("SELECT * FROM your_table LIMIT 10")
+        print("Query Result:", query_result)
+
+    except SnowparkSessionException as e:
+        print(f"Snowflake session error: {e}")
+    except AttributeError as e:
+        print(f"Attribute error: {e}")
+    finally:
+        # Ensure the session is closed properly
+        if 'search_service' in locals():
+            search_service.close_session()
+
 def create_snowpark_session():
     try:
         # Ensure only one session is created
